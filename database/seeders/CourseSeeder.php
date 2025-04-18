@@ -14,6 +14,8 @@ class CourseSeeder extends Seeder
     public function run(): void
     {
         //
-        Course::factory(20)->create(); // This will create 20 fake courses
+        Course::factory(20)->create([
+            'video_url' => 'https://www.youtube.com/watch?v=9IUwO66wi34'
+        ]); // This will create 20 fake courses
     }
 }

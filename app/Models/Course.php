@@ -29,4 +29,9 @@ class Course extends Model
     protected $casts = [
         'price' => 'decimal:2',
     ];
+    public function users()
+    {
+        return $this->belongsToMany(User::class)
+                    ->withTimestamps();
+    }
 }
