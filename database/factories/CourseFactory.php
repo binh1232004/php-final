@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,14 +17,13 @@ class CourseFactory extends Factory
      */
     public function definition(): array
     {
-        $subjects = ['Toán', 'Tiếng anh', 'Ngữ văn'];
         $grades = ['10', '11', '12'];
-        
+
         return [
             'name' => fake()->sentence(3),
-            'subject' => fake()->randomElement($subjects),
+            'category_id' => Category::inRandomOrder()->first()->id,
             'grade' => fake()->randomElement($grades),
-            'price' => fake()->numberBetween(100000, 1000000), 
+            'price' => fake()->numberBetween(100000, 1000000),
         ];
     }
 }
