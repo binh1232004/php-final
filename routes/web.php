@@ -42,3 +42,4 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/course/{course}', [CourseController::class, 'show'])->name('course.show');
 require __DIR__ . '/auth.php';
+Route::get('/courses/search', [CourseController::class, 'search'])->name('course.search');

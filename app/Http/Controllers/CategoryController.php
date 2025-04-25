@@ -28,15 +28,21 @@ class CategoryController extends Controller
     {
         $categories = Category::all();
         $selectedCategories = $request->input('categories', []);
+        $minPrice = $request->filled('min_price') ? $request->input('min_price') : 0;
+        $maxPrice = $request->filled('max_price') ? $request->input('max_price') : 10000000;
 
-        // Nếu chọn "Tất cả" hoặc không chọn gì, hiển thị toàn bộ khóa học
-        if (empty($selectedCategories) || in_array("", $selectedCategories)) {
-            $courses = Course::all();
-            $selectedCategories = []; // Đảm bảo danh sách chọn rỗng để giữ trạng thái checkbox "Tất cả"
-        } else {
-            $courses = Course::whereIn('category_id', $selectedCategories)->get();
+        $courses = Course::query();
+
+        if (!empty($selectedCategories) && !in_array("", $selectedCategories)) {
+            $courses->whereIn('category_id', $selectedCategories);
         }
 
-        return view('categories.index', compact('categories', 'courses', 'selectedCategories'));
+        $courses->whereBetween('price', [$minPrice, $maxPrice]);
+
+        return view('categories.index', [
+            'categories' => $categories,
+            'courses' => $courses->get(),
+            'selectedCategories' => $selectedCategories,
+        ]);
     }
 }
