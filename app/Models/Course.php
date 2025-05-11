@@ -16,7 +16,7 @@ class Course extends Model
      */
     protected $fillable = [
         'name',
-        'subject',
+        'category_id',
         'grade',
         'price'
     ];
@@ -29,9 +29,15 @@ class Course extends Model
     protected $casts = [
         'price' => 'decimal:2',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
     public function users()
     {
         return $this->belongsToMany(User::class)
-                    ->withTimestamps();
+            ->withTimestamps();
     }
 }
